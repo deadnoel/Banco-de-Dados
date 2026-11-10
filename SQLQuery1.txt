@@ -1,0 +1,96 @@
+USE HospitalDB
+
+SELECT * FROM Pacientes;
+SELECT * FROM Medico;
+SELECT * FROM Consultas;
+
+-- ATUALIZAÇÃÕ DDE DADOS (UPDATE)
+--ATUALIZAR O TELEFONE CARLA
+UPDATE Pacientes
+SET Telefone = '1197840-5359'
+WHERE nome = 'Carla Mendes'
+GO
+
+--atualizar valor da consulta que esta nulo
+UPDATE consultas
+SET valor = 180.00
+WHERE valor IS NULL; --WHERE id_paciente '3'
+GO
+
+--DELETE
+--Deletar consultas sem diagnostico (IS NULL)
+
+DELETE FROM Consultas
+WHERE diagnostico IS NULL;
+GO
+--Deletar pacientes sem convenio(IS NULL)
+DELETE FROM Pacientes
+WHERE convenio IS NULL;
+GO
+
+-- ALTER TABLE (DDL- ALTER)
+--ADicionar nova coluna
+ALTER TABLE Pacientes
+ADD email VARCHAR(80) NULL;
+GO
+
+--alterara tipod de dado de uma coluna
+ALTER TABLE Pacientes
+ALTER COLUMN telefone VARCHAR(30) NULL;
+GO
+
+--Excluir uma coluna
+ALTER TABLE Pacientes
+DROP COLUMN email; 
+GO
+
+--ORDER BY ORDENAÇÂO DE RESULTADOS
+--Ordenar pacientes em ordem alfabeticas
+SELECT * FROM Pacientes
+ORDER BY nome ASC;
+ --Ordenar consulrlas do valor mais alto para o mais baixo
+ SELECT * FROM Consultas
+ ORDER BY valor DESC;
+ 
+ SELECT nome, convenio FROM pacientes
+ ORDER BY convenio ASC, nome ASC;
+ GO
+
+ -- FUNcoes de consulta
+/*AVG > media
+SUM () > soma
+min menor valor
+max maior valor
+count() retorna o numero de linhas ou registros encontrados*/
+
+-- QTT total de consultas
+ 
+ SELECT COUNT(*) AS total_consultas
+ FROM Consultas;
+
+ SELECT MAX (valor) AS maior_valor
+ FROM Consultas;
+
+ SELECT MIN (valor) AS menor_valor
+ FROM Consultas;
+
+ SELECT AVG (valor) AS media_valor
+ FROM Consultas;
+
+ SELECT SUM (valor) AS soma_valor
+ FROM Consultas;
+
+ -- GROUP - Agrupar Resultados
+ --contar quantos pacientes tem convenio
+ SELECT convenio, COUNT(*) AS total_paciente
+ FROM Pacientes
+ GROUP BY convenio;
+ --Média de valores ce consultas por paciente
+ SELECT id_paciente, AVG(valor) AS media_valor
+ FROM Consultas
+ GROUP BY id_paciente;
+
+ -- DROP TABLE agrupar resultados
+
+ DROP TABLE Consultas;
+
